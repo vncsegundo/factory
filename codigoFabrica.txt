@@ -1,0 +1,77 @@
+using System;
+
+class Program {
+  public static void Main (string[] args) {
+
+
+    ILogger logger = Fabrica.Criar(Fabrica.TipoLogger.Console);
+    
+    logger.Logar( "Entendi como funciona a Fábrica!" );
+       
+  }
+}
+
+public class Fabrica 
+{
+  public enum TipoLogger
+  {
+    Console,
+    Arquivo,
+    BancoDados,
+    API
+  }
+  public static ILogger Criar(TipoLogger tipo)
+  {
+    switch(tipo)
+    {
+      case TipoLogger.Console:
+        return new ConsoleLogger();
+
+      case TipoLogger.Arquivo:
+        return new ArquivoLogger();
+
+      case TipoLogger.BancoDados:
+        return new BancoDadosLogger();  
+
+      case TipoLogger.API:
+        return new APILogger();  
+    }
+
+    return null;
+    
+  }
+}
+
+public interface ILogger {
+  public void Logar( string mensagem );
+  
+}
+
+
+public class ConsoleLogger : ILogger{
+  public void Logar ( string mensagem )
+  {
+    // Implementa o log para um console
+  }
+}
+
+public class ArquivoLogger : ILogger{
+  public void Logar ( string mensagem )
+  {
+    // Implementa o log para um arquivo
+  }
+}
+
+public class BancoDadosLogger : ILogger{
+  public void Logar ( string mensagem )
+  {
+    // Implementa o log gravando no banco de dados
+  }
+}
+
+public class APILogger : ILogger{
+  public void Logar ( string mensagem )
+  {
+    // Implementa a API do logger
+  }
+}
